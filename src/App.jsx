@@ -41,8 +41,8 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
 // --- RESUME DOWNLOAD PATH ---
-// Correct path for files in the 'public' folder.
-const resumeUrl = "/Saurabh Resume.pdf";
+// ✅ FIX: The path is correct because "Saurabh Resume.pdf" is now in the /public folder.
+import resumeUrl from "/Saurabh Resume.pdf";
 
 // --- PROFILE PICTURE PATH ---
 // Correctly import the image from the 'src/assets' folder.
