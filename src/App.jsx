@@ -41,8 +41,8 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
 // --- RESUME DOWNLOAD PATH ---
-// ✅ FIX: The path is correct because "Saurabh Resume.pdf" is now in the /public folder.
-import resumeUrl from "/Saurabh Resume.pdf";
+// ✅ FIX: Use import.meta.env.BASE_URL to handle GitHub Pages deployment
+const resumeUrl = `${import.meta.env.BASE_URL}Saurabh-Resume.pdf`;
 
 // --- PROFILE PICTURE PATH ---
 // Correctly import the image from the 'src/assets' folder.
@@ -222,6 +222,26 @@ const certifications = [
   { name: "Problem Solving", issuer: "HackerRank" },
   { name: "160 Days of Problem Solving", issuer: "GeeksforGeeks" },
 ];
+
+// --- RESUME DOWNLOAD HANDLER ---
+const handleResumeDownload = () => {
+  try {
+    // Create a temporary link element
+    const link = document.createElement("a");
+    link.href = resumeUrl;
+    link.download = "Saurabh Kumar - Resume.pdf";
+    link.target = "_blank";
+
+    // Append to body, click, and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Error downloading resume:", error);
+    // Fallback: open in new tab
+    window.open(resumeUrl, "_blank");
+  }
+};
 
 // --- 3D Rotating Shape Component ---
 const RotatingShape = ({ shapeType }) => {
@@ -454,17 +474,16 @@ const App = () => {
               Hi, I'm <span className="text-cyan-400">{personalInfo.name}</span>
             </motion.h1>
             <AnimatedSubtitle />
-            <motion.a
-              href={resumeUrl}
-              download="Saurabh Kumar - Resume.pdf"
+            <motion.button
+              onClick={handleResumeDownload}
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-8 flex items-center gap-2 px-6 py-3 bg-cyan-500/10 border border-cyan-500 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition-colors"
+              className="mt-8 flex items-center gap-2 px-6 py-3 bg-cyan-500/10 border border-cyan-500 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition-colors cursor-pointer"
             >
               <Download size={20} />
               Download Resume
-            </motion.a>
+            </motion.button>
           </div>
         </section>
 
