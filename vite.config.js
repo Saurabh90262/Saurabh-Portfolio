@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react()],
   // Add this to ensure proper asset handling
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     assetsDir: 'assets',
   },
   // Add this to handle public assets correctly
