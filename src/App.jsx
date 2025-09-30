@@ -36,6 +36,8 @@ import {
   ToyBrick,
   Cpu,
   Coffee,
+  Database,
+  RadioTower,
 } from "lucide-react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
@@ -98,7 +100,7 @@ const socialLinks = [
   {
     name: "LinkedIn",
     icon: Linkedin,
-    url: "https://www.linkedin.com/in/saurabh-kumar-773a9928b/",
+    url: "https://www.linkedin.com/in/saurabh-kumar-255911288/",
     color: "hover:text-blue-400 hover:border-blue-400",
   },
   {
@@ -119,7 +121,7 @@ const skills = {
   languages: {
     name: "Languages",
     shape: "box",
-    items: ["Java", "C++", "Python", "JavaScript", "C", "SQL"],
+    items: ["Java", "C++", "Python", "JavaScript", "C", "SQL", "XML"],
   },
   frontend: {
     name: "Frontend",
@@ -144,7 +146,7 @@ const skills = {
   tools: {
     name: "Tools & Platforms",
     shape: "tetrahedron",
-    items: ["Git", "GitHub", "VS Code"],
+    items: ["Git", "GitHub", "VS Code", "IntelliJ IDEA"],
   },
   ai_ml: {
     name: "AI/ML",
@@ -158,8 +160,10 @@ const coreCompetencies = [
   { title: "Data Structures & Algorithms", icon: <Cpu /> },
   { title: "Object Oriented Programming (OOPs)", icon: <ToyBrick /> },
   { title: "Full Stack Web Development", icon: <Server /> },
+  { title: "Database Management System", icon: <Database /> },
   { title: "Artificial Intelligence", icon: <BrainCircuit /> },
-  { title: "Internet of Things", icon: <Code /> },
+  { title: "Internet  of Things", icon: <RadioTower /> },
+  
 ];
 
 const projects = [
@@ -205,11 +209,6 @@ const achievements = [
     platform:
       "Earned for proficiency in data manipulation and analysis using Python.",
     icon: Award,
-  },
-  {
-    title: "Smart India Hackathon 2025",
-    platform: "College Level Hackathon",
-    icon: GFGIcon,
   },
 ];
 
@@ -399,7 +398,7 @@ const App = () => {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold text-cyan-400 tracking-wider"
           >
-            SK.
+            SK
           </motion.a>
           <div className="hidden md:flex space-x-8 items-center">
             {[
@@ -503,7 +502,7 @@ const App = () => {
                 {education.college} with a strong passion for software
                 development and artificial intelligence. I thrive on solving
                 complex problems and continuously learning new technologies to
-                build efficient and impactful applications.
+                build efficient, innovative, and impactful applications.
               </p>
             </motion.div>
             <div className="w-full">
