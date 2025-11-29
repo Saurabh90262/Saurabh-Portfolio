@@ -11,3 +11,81 @@ html {
 body {
   @apply bg-gray-900 text-gray-300 antialiased;
 }
+
+/* ===== Rotating edge-lighting for cards (edges only, aligned) ===== */
+
+/* Animated angle for the conic gradient */
+@property --glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes spin-glow-border {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+/* Wrapper used on TiltCard */
+.glow-card {
+  position: relative;
+  border-radius: 1.25rem; /* match your card radius */
+  overflow: hidden;       /* keep glow & border nicely clipped to the shape */
+}
+
+/* Rotating gradient border ring */
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;                 /* exactly the card bounds */
+  box-sizing: border-box;
+  padding: 2px;             /* thickness of the glowing border */
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+
+  /* animated conic gradient */
+  --glow-angle: 0deg;
+  background: conic-gradient(
+    from var(--glow-angle),
+    #23f751,
+    #2d23f4,
+    #e81a1a,
+    #f5f522
+  );
+  animation: spin-glow-border 4s linear infinite;
+
+  /* mask so only the border (edge) is visible, center is transparent */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0) border-box;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Soft blue glow background on hover */
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: -12px; /* extend slightly outside card for a soft aura */
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.45), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.45), transparent 60%);
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 0.35s ease;
+  z-index: 0;
+}
+
+.glow-card:hover::after {
+  opacity: 1;
+}
+
+/* Ensure inner card content keeps its own background and sits above glow/border */
+.glow-card > * {
+  position: relative;
+  z-index: 2;
+  border-radius: inherit;
+}

@@ -43,11 +43,9 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
 // --- RESUME DOWNLOAD PATH ---
-// ✅ FIX: Use import.meta.env.BASE_URL to handle GitHub Pages deployment
 const resumeUrl = `${import.meta.env.BASE_URL}Saurabh-Resume.pdf`;
 
 // --- PROFILE PICTURE PATH ---
-// Correctly import the image from the 'src/assets' folder.
 import profilePic from "./assets/profile.jpg";
 
 // --- DATA (Updated from Resume) ---
@@ -77,6 +75,7 @@ const LeetCodeIcon = () => (
     <path d="M13.48 4.26l1.72 1.72-1.06 1.06-1.72-1.72 1.06-1.06zm4.58 4.58l1.06-1.06-1.72-1.72-1.06 1.06 1.72 1.72zM20.44 2l1.06 1.06-1.72 1.72-1.06-1.06 1.72-1.72zM4 22h16v-2H4v2zM8.5 17l-4.24-4.24 1.41-1.41 2.83 2.83 6.36-6.36 1.41 1.41L8.5 17z" />
   </svg>
 );
+
 const GFGIcon = () => (
   <svg
     role="img"
@@ -121,7 +120,7 @@ const skills = {
   languages: {
     name: "Languages",
     shape: "box",
-    items: ["Java", "C++", "Python", "JavaScript", "C", "SQL", "XML"],
+    items: ["Java", "C++,", "Python", "JavaScript", "C", "SQL", "XML"],
   },
   frontend: {
     name: "Frontend",
@@ -163,7 +162,6 @@ const coreCompetencies = [
   { title: "Database Management System", icon: <Database /> },
   { title: "Artificial Intelligence", icon: <BrainCircuit /> },
   { title: "Internet  of Things", icon: <RadioTower /> },
-  
 ];
 
 const projects = [
@@ -225,19 +223,15 @@ const certifications = [
 // --- RESUME DOWNLOAD HANDLER ---
 const handleResumeDownload = () => {
   try {
-    // Create a temporary link element
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "Saurabh Kumar - Resume.pdf";
     link.target = "_blank";
-
-    // Append to body, click, and remove
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   } catch (error) {
     console.error("Error downloading resume:", error);
-    // Fallback: open in new tab
     window.open(resumeUrl, "_blank");
   }
 };
@@ -280,9 +274,9 @@ const RotatingShape = ({ shapeType }) => {
   }
 };
 
-// --- 3D Tilting Card Component ---
+// --- 3D Tilting Card Component (edge glow tilts together) ---
 const TiltCard = ({ children, className }) => {
-  const ref = useRef(null);
+  const wrapperRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -290,7 +284,7 @@ const TiltCard = ({ children, className }) => {
   const rotateY = useTransform(x, [-150, 150], [-10, 10]);
 
   const handleMouseMove = (event) => {
-    const rect = ref.current.getBoundingClientRect();
+    const rect = wrapperRef.current.getBoundingClientRect();
     x.set(event.clientX - rect.left - rect.width / 2);
     y.set(event.clientY - rect.top - rect.height / 2);
   };
@@ -300,18 +294,31 @@ const TiltCard = ({ children, className }) => {
     animate(y, 0, { duration: 0.3 });
   };
 
+  const child =
+    React.isValidElement(children)
+      ? React.cloneElement(children, {
+          className: `glow-card ${children.props.className || ""} ${
+            className || ""
+          }`,
+          style: {
+            ...(children.props.style || {}),
+            rotateX,
+            rotateY,
+            willChange: "transform",
+          },
+        })
+      : children;
+
   return (
-    <motion.div
-      ref={ref}
-      className={`relative ${className}`}
+    <div
+      ref={wrapperRef}
+      className="relative"
       style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <motion.div style={{ rotateX, rotateY }} className="h-full w-full">
-        {children}
-      </motion.div>
-    </motion.div>
+      {child}
+    </div>
   );
 };
 
@@ -451,6 +458,7 @@ const App = () => {
       </nav>
 
       <main className="relative z-10 pt-20">
+        {/* HERO */}
         <section
           id="home"
           className="min-h-screen flex items-center justify-center text-center px-4 -mt-20"
@@ -470,7 +478,7 @@ const App = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-4xl md:text-6xl font-bold mb-4"
             >
-              Hi, I'm <span className="text-cyan-400">{personalInfo.name}</span>
+              I’m <span className="text-cyan-400">{personalInfo.name}</span>
             </motion.h1>
             <AnimatedSubtitle />
             <motion.button
@@ -486,6 +494,7 @@ const App = () => {
           </div>
         </section>
 
+        {/* ABOUT */}
         <section id="about" className="py-24 max-w-4xl mx-auto px-6">
           <div className="flex flex-col items-center text-center gap-12">
             <motion.div
@@ -505,6 +514,7 @@ const App = () => {
                 build efficient, innovative, and impactful applications.
               </p>
             </motion.div>
+
             <div className="w-full">
               <h3 className="text-2xl font-bold mb-6 text-cyan-400/90">
                 Core Competencies
@@ -528,6 +538,7 @@ const App = () => {
           </div>
         </section>
 
+        {/* SKILLS */}
         <section id="skills" className="py-24 max-w-7xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-cyan-400 text-center">
             Technical Skills
@@ -536,45 +547,50 @@ const App = () => {
             {Object.values(skills).map((category, i) => (
               <TiltCard key={i}>
                 <motion.div
-                  className="bg-gray-800/40 p-6 rounded-2xl border border-gray-700/80 backdrop-blur-sm transition-all duration-300 h-full group"
+                  className="bg-gray-800/40 p-6 rounded-2xl border border-gray-700/80 backdrop-blur-sm h-full group relative"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                 >
-                  <div className="absolute inset-0 bg-dot-cyan-500/[0.1] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-bold text-cyan-400 pt-2">
-                      {category.name}
-                    </h3>
-                    <div className="w-20 h-20 -mt-4 -mr-2">
-                      <Suspense
-                        fallback={
-                          <div className="w-full h-full bg-gray-700/50 rounded-lg animate-pulse"></div>
-                        }
-                      >
-                        <Canvas camera={{ position: [0, 0, 2.5], fov: 50 }}>
-                          <ambientLight intensity={0.8} />
-                          <pointLight position={[10, 10, 10]} intensity={1} />
-                          <RotatingShape shapeType={category.shape} />
-                          <OrbitControls
-                            enableZoom={false}
-                            autoRotate
-                            autoRotateSpeed={3}
-                          />
-                        </Canvas>
-                      </Suspense>
+                  <div className="absolute inset-0 bg-dot-cyan-500/[0.1] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-xl font-bold text-cyan-400 pt-2">
+                        {category.name}
+                      </h3>
+                      <div className="w-20 h-20 -mt-4 -mr-2">
+                        <Suspense
+                          fallback={
+                            <div className="w-full h-full bg-gray-700/50 rounded-lg animate-pulse"></div>
+                          }
+                        >
+                          <Canvas
+                            style={{ pointerEvents: "none" }}
+                            camera={{ position: [0, 0, 2.5], fov: 50 }}
+                          >
+                            <ambientLight intensity={0.8} />
+                            <pointLight position={[10, 10, 10]} intensity={1} />
+                            <RotatingShape shapeType={category.shape} />
+                            <OrbitControls
+                              enableZoom={false}
+                              autoRotate
+                              autoRotateSpeed={3}
+                            />
+                          </Canvas>
+                        </Suspense>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 relative z-10">
-                    {category.items.map((skill) => (
-                      <span
-                        key={skill}
-                        className="bg-gray-700/50 px-3 py-1 rounded-full text-sm text-gray-300 transition-colors hover:bg-cyan-400/20 hover:text-cyan-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                    <div className="flex flex-wrap gap-2">
+                      {category.items.map((skill) => (
+                        <span
+                          key={skill}
+                          className="bg-gray-700/50 px-3 py-1 rounded-full text-sm text-gray-300 transition-colors hover:bg-cyan-400/20 hover:text-cyan-300"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
               </TiltCard>
@@ -582,6 +598,7 @@ const App = () => {
           </div>
         </section>
 
+        {/* PROJECTS */}
         <section id="projects" className="py-24 max-w-4xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-16 text-cyan-400 text-center">
             My Projects
@@ -594,10 +611,9 @@ const App = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.5 }}
                   transition={{ duration: 0.6 }}
-                  className="bg-gray-800/60 backdrop-blur-sm p-6 rounded-xl border border-gray-700 w-full group overflow-hidden"
+                  className="bg-gray-800/60 backdrop-blur-sm p-6 rounded-xl border border-gray-700 w-full group overflow-hidden relative"
                 >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-75 transition-opacity duration-300 blur-lg"></div>
-                  <div className="relative">
+                  <div className="relative z-10">
                     <div className="flex items-center gap-4 mb-2">
                       <span className="text-cyan-400">{project.icon}</span>
                       <p className="text-sm font-semibold text-gray-400">
@@ -627,6 +643,7 @@ const App = () => {
           </div>
         </section>
 
+        {/* CERTIFICATIONS */}
         <section id="certifications" className="py-24 max-w-6xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-cyan-400 text-center">
             Certifications
@@ -635,14 +652,13 @@ const App = () => {
             {certifications.map((cert, index) => (
               <TiltCard key={index}>
                 <motion.div
-                  className="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 text-center h-full group"
+                  className="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 text-center h-full group relative"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.5 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <div className="absolute inset-0 bg-dot-cyan-500/[0.1] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex flex-col items-center justify-center h-full">
+                  <div className="relative z-10 flex flex-col items-center justify-center h-full">
                     <Award className="text-cyan-400 w-10 h-10 mx-auto mb-4" />
                     <h3 className="text-md font-bold">{cert.name}</h3>
                     <p className="text-gray-400 text-sm">{cert.issuer}</p>
@@ -653,6 +669,7 @@ const App = () => {
           </div>
         </section>
 
+        {/* ACHIEVEMENTS */}
         <section id="achievements" className="py-24 max-w-6xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-cyan-400 text-center">
             Achievements
@@ -663,17 +680,19 @@ const App = () => {
               return (
                 <TiltCard key={index}>
                   <motion.div
-                    className="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 text-center h-full"
+                    className="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 text-center h-full group relative"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <div className="text-cyan-400 w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-gray-700/50 rounded-full">
-                      <Icon />
+                    <div className="relative z-10">
+                      <div className="text-cyan-400 w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-gray-700/50 rounded-full">
+                        <Icon />
+                      </div>
+                      <h3 className="text-lg font-bold">{ach.title}</h3>
+                      <p className="text-gray-400 text-sm">{ach.platform}</p>
                     </div>
-                    <h3 className="text-lg font-bold">{ach.title}</h3>
-                    <p className="text-gray-400 text-sm">{ach.platform}</p>
                   </motion.div>
                 </TiltCard>
               );
@@ -681,6 +700,7 @@ const App = () => {
           </div>
         </section>
 
+        {/* CONTACT */}
         <section id="contact" className="py-24 text-center px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">
             Get In Touch
