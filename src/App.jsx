@@ -216,8 +216,12 @@ const certifications = [
     name: "Introduction to Internet of Things",
     issuer: "NPTEL (IIT Kharagpur)",
   },
+  { name: "Oracle Cloud Infrastructure 2025 AI Foundations Associate", issuer: "Oracle university" },
+  { name: "GFG 160 Days of Problem Solving", issuer: "GeeksforGeeks" },
   { name: "Problem Solving", issuer: "HackerRank" },
-  { name: "160 Days of Problem Solving", issuer: "GeeksforGeeks" },
+  { name: "Full Stack Web Development", issuer: "Apna College" },
+  { name: "DSA with Java", issuer: "Apna College" },
+  { name: "Python Beginner Mastering the Essentials", issuer: "Scaler" },
 ];
 
 // --- RESUME DOWNLOAD HANDLER ---
