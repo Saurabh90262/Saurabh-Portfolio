@@ -88,6 +88,7 @@ const STYLES = `
     will-change: transform; transition: width 0.15s, height 0.15s;
   }
   .c-ring.pressed { width: 18px; height: 18px; }
+  @media (max-width: 900px) { .c-dot, .c-ring { display: none !important; } }
 
   .scrollbar-progress {
     position: fixed; top: 0; left: 0; right: 0; height: 2px;
@@ -688,6 +689,7 @@ const Nav = () => {
 // ─── HERO ─────────────────────────────────────────────────────────────────
 const Hero = () => {
   const pInit = useCallback(async(e)=>{ await loadFull(e); },[]);
+  const isMobile = useIsMobile();
   return (
     <section id="home" className="grid-bg" style={{minHeight:"100vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden"}}>
       <Particles id="tsparticles" init={pInit} options={{
@@ -728,6 +730,15 @@ const Hero = () => {
               style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:44}}>
               <a href="#projects" className="btn-y">View Projects <ArrowUpRight size={13}/></a>
               <a href="#contact"  className="btn-g">Get In Touch</a>
+              {isMobile && (
+                <button
+                  onClick={()=>window.open(resumeUrl,"_blank")}
+                  className="btn-g"
+                  style={{gap:8, borderColor:"var(--accent)", color:"var(--accent)"}}
+                >
+                  <Download size={13}/> Download Resume
+                </button>
+              )}
             </motion.div>
             <motion.div className="hero-stats" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.65}}
               style={{display:"flex",gap:36,paddingTop:24,borderTop:"1px solid var(--border)"}}>
