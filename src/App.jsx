@@ -22,14 +22,11 @@ import {
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
-// ── TECH STACK ICONS (react-icons) ────────────────────────────────────────
 import { FaJava, FaNodeJs, FaGitAlt, FaGithub, FaHtml5, FaCss3Alt, FaDatabase } from "react-icons/fa";
 import { SiPython } from "react-icons/si";
 import { SiJavascript, SiCplusplus, SiMysql, SiReact, SiNextdotjs, SiTailwindcss, SiExpress, SiSpringboot, SiMongodb, SiIntellijidea, SiOpenai, SiGooglegemini } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 
-
-// ─── ALL CSS INJECTED ─────────────────────────────────────────────────────────
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 
@@ -38,12 +35,9 @@ const STYLES = `
     --surface: #0b0d16;
     --surface2: #10121e;
     --border: rgba(255,255,255,0.07);
-    
-    /* Original Neon Yellow Palette Restored */
     --accent: #e8ff47;
     --accent2: #ff3d6b;
     --accent3: #00e5ff;
-    
     --text: #c0c2d4;
     --muted: #46495e;
     --white: #eef0f9;
@@ -186,12 +180,6 @@ const STYLES = `
   }
   .comp-row:hover { border-color: rgba(0,240,255,0.3); background: rgba(0,240,255,0.03); transform: translateX(8px); }
 
-  .cert-row {
-    border-left: 2px solid var(--accent);
-    padding: 14px 0 14px 20px; transition: all 0.2s ease;
-  }
-  .cert-row:hover { border-left-color: var(--accent2); padding-left: 28px; }
-
   .clink {
     display: flex; align-items: center; gap: 14px;
     padding: 16px 20px; border-radius: 12px;
@@ -203,56 +191,30 @@ const STYLES = `
   @keyframes blob { 0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%} 25%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%} 50%{border-radius:50% 60% 30% 60%/40% 70% 60% 40%} 75%{border-radius:70% 30% 60% 40%/30% 50% 60% 70%} }
   .blob { animation: blob 12s ease-in-out infinite; }
 
-  /* ── INTERACTIVE SOCIAL ICONS (FILLED BUBBLE) ── */
   .social-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    
-    /* NEW: Filled bubble base state */
+    width: 48px; height: 48px; border-radius: 50%;
     background: color-mix(in srgb, var(--glow-clr) 15%, transparent);
     border: 1px solid color-mix(in srgb, var(--glow-clr) 40%, transparent);
-    color: var(--glow-clr); /* Icon matches the bubble color */
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--glow-clr);
+    display: flex; align-items: center; justify-content: center;
     text-decoration: none;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
+    flex-shrink: 0;
   }
-  
   .social-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
     box-shadow: 0 0 15px var(--glow-clr), 0 0 30px var(--glow-clr), 0 0 45px var(--glow-clr);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
+    opacity: 0; transition: opacity 0.3s ease; z-index: -1;
   }
-  
-  .social-btn:hover {
-    /* Solid color fill with dark icon for maximum contrast on hover */
-    background: var(--glow-clr);
-    border-color: var(--glow-clr);
-    color: #000; 
-    transform: scale(1.35) translateY(-4px);
-  }
-  
-  .social-btn:hover::after {
-    opacity: 0.85;
-    animation: pulse-glitter 1.2s infinite alternate;
-  }
+  .social-btn:hover { background: var(--glow-clr); border-color: var(--glow-clr); color: #000; transform: scale(1.35) translateY(-4px); }
+  .social-btn:hover::after { opacity: 0.85; animation: pulse-glitter 1.2s infinite alternate; }
 
   @keyframes pulse-glitter {
     0% { box-shadow: 0 0 10px var(--glow-clr), 0 0 20px var(--glow-clr); filter: brightness(1); }
     100% { box-shadow: 0 0 25px var(--glow-clr), 0 0 50px var(--glow-clr), 0 0 70px var(--glow-clr); filter: brightness(1.4); }
   }
 
-  /* ── TECH ICON ORBIT ANIMATION ── */
   @keyframes orbit {
     from { transform: rotate(0deg) translateX(28px) rotate(0deg); }
     to   { transform: rotate(360deg) translateX(28px) rotate(-360deg); }
@@ -265,10 +227,6 @@ const STYLES = `
     0%, 100% { transform: translateY(0px) scale(1); }
     33%       { transform: translateY(-6px) scale(1.05); }
     66%       { transform: translateY(4px) scale(0.97); }
-  }
-  @keyframes spin-icon {
-    from { transform: rotateY(0deg); }
-    to   { transform: rotateY(360deg); }
   }
   @keyframes pulse-glow {
     0%,100% { filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 8px currentColor); opacity: 0.85; }
@@ -290,7 +248,6 @@ const STYLES = `
     animation: float-icon var(--dur, 3s) ease-in-out infinite; animation-delay: var(--del, 0s);
     filter: drop-shadow(0 0 6px var(--clr)) drop-shadow(0 0 12px var(--clr)); transition: transform 0.3s; z-index: 2;
   }
-  .icon-centre:hover { animation: pulse-glow 0.6s ease-in-out; }
   .icon-sat {
     position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px;
     display: flex; align-items: center; justify-content: center;
@@ -299,35 +256,79 @@ const STYLES = `
   }
   .icon-sat.rev { animation-name: orbit-reverse; }
   .icon-sat:hover { opacity: 1; }
-  .icon-drift {
-    position: absolute; display: flex; align-items: center; justify-content: center;
-    animation: drift var(--drift-dur, 4s) ease-in-out infinite; animation-delay: var(--drift-del, 0s);
-    opacity: 0.65; filter: drop-shadow(0 0 4px var(--clr));
-  }
   .skill-card:hover .icon-centre { transform: scale(1.15); }
   .skill-card:hover .icon-sat    { opacity: 1; }
-  .skill-card:hover .icon-drift  { opacity: 0.9; }
 
+  /* ── RESPONSIVE BREAKPOINTS ── */
+
+  /* Tablets and below */
   @media (max-width: 900px) {
-    .hide-sm { display: none !important; }
-    .grid-about, .grid-contact { grid-template-columns: 1fr !important; gap: 40px !important; }
-    .timeline-grid { grid-template-columns: 40px 1fr !important; }
-    .tl-left { display: none !important; }
-    .tl-right { padding-left: 20px !important; padding-right: 0 !important; }
-    .ach-grid { grid-template-columns: 1fr !important; }
+    .hide-desktop { display: none !important; }
+    .grid-about { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .grid-contact { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .ach-grid { grid-template-columns: 1fr 1fr !important; }
     .skills-grid { grid-template-columns: 1fr 1fr !important; }
+    .timeline-wrapper { padding: 0 !important; }
   }
+
+  /* Mobile */
   @media (max-width: 600px) {
     .skills-grid { grid-template-columns: 1fr !important; }
+    .ach-grid { grid-template-columns: 1fr !important; }
+
+    /* Hero mobile */
+    .hero-grid {
+      grid-template-columns: 1fr !important;
+      justify-items: center !important;
+      text-align: center !important;
+    }
+    .hero-stats {
+      justify-content: center !important;
+    }
+    .hero-buttons {
+      justify-content: center !important;
+    }
+    .hero-profile {
+      display: flex !important;
+      order: -1 !important;
+      margin-bottom: 8px !important;
+    }
+
+    /* About mobile */
+    .grid-about { gap: 28px !important; }
+
+    /* Contact mobile */
+    .grid-contact { gap: 28px !important; }
+
+    /* Footer mobile */
+    .footer-inner {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 16px !important;
+    }
+
+    /* Nav padding */
+    .nav-wrap { padding: 0 16px !important; }
+    .section-wrap { padding: 0 16px !important; }
+    .section-pad { padding: 60px 0 !important; }
+  }
+
+  /* Very small screens */
+  @media (max-width: 380px) {
+    .btn-y, .btn-g { padding: 10px 18px !important; font-size: 11px !important; }
+    .social-btn { width: 40px !important; height: 40px !important; }
+  }
+
+  /* PCard full width on mobile */
+  @media (max-width: 700px) {
+    .pcard-wrap { max-width: 100% !important; width: 100% !important; }
   }
 `;
 
-// ─── ASSETS ───────────────────────────────────────────────────────────────
 const resumeUrl = `${import.meta.env.BASE_URL}Saurabh-Resume.pdf`;
-// Make sure you have this image path correct in your real app
-import profilePic from "./assets/profile.jpg"; 
+import profilePic from "./assets/profile.jpg";
 
-// ─── CUSTOM ICONS ─────────────────────────────────────────────────────────
 const LeetCodeIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
     <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/>
@@ -339,7 +340,6 @@ const GFGIcon = ({ size = 18 }) => (
   </svg>
 );
 
-// ─── TECH ICON CLUSTER CONFIG ─────────────────────────────────────────────
 const SKILL_ICON_CONFIGS = {
   Languages: {
     centre: { Icon: FaJava, color: "#f89820", size: 32, dur: "3.2s", del: "0s" },
@@ -376,9 +376,9 @@ const SKILL_ICON_CONFIGS = {
   Tools: {
     centre: { Icon: FaGitAlt, color: "#f05032", size: 32, dur: "3s", del: "0.3s" },
     sats: [
-      { Icon: FaGithub,          color: "#ffffff",  size: 13, orbDur: "5s",  orbDel: "0s",   rev: false },
-      { Icon: VscVscode, color: "#007acc", size: 13, orbDur: "7s", orbDel: "-3s", rev: true },
-      { Icon: SiIntellijidea,    color: "#ff318c",  size: 12, orbDur: "6.5s",orbDel: "-1.5s",rev: false },
+      { Icon: FaGithub,       color: "#ffffff",  size: 13, orbDur: "5s",  orbDel: "0s",   rev: false },
+      { Icon: VscVscode,      color: "#007acc",  size: 13, orbDur: "7s",  orbDel: "-3s",  rev: true  },
+      { Icon: SiIntellijidea, color: "#ff318c",  size: 12, orbDur: "6.5s",orbDel: "-1.5s",rev: false },
     ],
   },
   "AI / ML": {
@@ -412,31 +412,19 @@ const TechIconCluster = ({ label }) => {
   );
 };
 
-// ─── DATA ─────────────────────────────────────────────────────────────────
 const ME = { name:"Saurabh Kumar", location:"Ghaziabad, UP", email:"saurabh90262@gmail.com", phone:"+91-9026272421" };
 const EDU = { degree:"B.Tech — Information Technology", college:"ABES Engineering College", years:"2023 – 2027", cgpa:"8.0 / 10" };
 
-// ─── SOCIALS WITH GLOW COLORS ─────────────────────────────────────────────
 const SOCIALS = [
-  { name:"GitHub",   Icon:Github,       url:"https://github.com/saurabh90262",                   color: "#ff00a0" }, // Magenta
-  { name:"LinkedIn", Icon:Linkedin,     url:"https://linkedin.com/in/saurabh-kumar-255911288/",  color: "#00e5ff" }, // Blue
-  { name:"LeetCode", Icon:LeetCodeIcon, url:"https://leetcode.com/u/saurabh90262/",              color: "#ffe600" }, // Yellow
-  { name:"GFG",      Icon:GFGIcon,      url:"https://www.geeksforgeeks.org/user/saurabh90262/",  color: "#00ff66" }, // Green
+  { name:"GitHub",   Icon:Github,       url:"https://github.com/saurabh90262",                  color: "#ff00a0" },
+  { name:"LinkedIn", Icon:Linkedin,     url:"https://linkedin.com/in/saurabh-kumar-255911288/", color: "#00e5ff" },
+  { name:"LeetCode", Icon:LeetCodeIcon, url:"https://leetcode.com/u/saurabh90262/",             color: "#ffe600" },
+  { name:"GFG",      Icon:GFGIcon,      url:"https://www.geeksforgeeks.org/user/saurabh90262/", color: "#00ff66" },
 ];
 
-// ─── REUSABLE INTERACTIVE SOCIAL ICON COMPONENT ───────────────────────────
 const SocialIconBtn = ({ name, Icon, url, color }) => (
-  <a 
-    href={url} 
-    target="_blank" 
-    rel="noopener noreferrer"
-    title={name}
-    className="social-btn"
-    style={{
-      "--glow-clr": color,
-      "--glow-bg": `${color}1A` // Adds 10% opacity hex to the color for background
-    }}
-  >
+  <a href={url} target="_blank" rel="noopener noreferrer" title={name} className="social-btn"
+    style={{ "--glow-clr": color }}>
     <Icon size={18} />
   </a>
 );
@@ -470,7 +458,7 @@ const PROJECTS = [
     tags:["MongoDB","Express.js","React","Node.js"],
     live:"https://trainexpert.vercel.app/",
     repo:"https://github.com/Saurabh90262/Rail-Ticket-Sharing",
-    accent:"#a855f7", 
+    accent:"#a855f7",
   },
   {
     num:"02", year:"Feb 2025",
@@ -559,7 +547,12 @@ const Tilt = ({ children }) => {
   const x = useMotionValue(0), y = useMotionValue(0);
   const rX = useTransform(y,[-100,100],[7,-7]);
   const rY = useTransform(x,[-100,100],[-7,7]);
-  const onMove = (e) => { const b=r.current.getBoundingClientRect(); x.set(e.clientX-b.left-b.width/2); y.set(e.clientY-b.top-b.height/2); };
+  const onMove = (e) => {
+    if (!r.current) return;
+    const b=r.current.getBoundingClientRect();
+    x.set(e.clientX-b.left-b.width/2);
+    y.set(e.clientY-b.top-b.height/2);
+  };
   const onOut  = () => { animate(x,0,{duration:0.5}); animate(y,0,{duration:0.5}); };
   return (
     <div ref={r} style={{perspective:"900px"}} onMouseMove={onMove} onMouseLeave={onOut}>
@@ -589,53 +582,102 @@ const AnimRole = () => {
 const SH = ({ label, title }) => (
   <motion.div initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.5}} style={{marginBottom:60}}>
     <span className="slabel">{label}</span>
-    <h2 className="display" style={{fontSize:"clamp(46px,7vw,82px)",color:"var(--white)",lineHeight:1,letterSpacing:"-0.01em"}}>{title}</h2>
+    <h2 className="display" style={{fontSize:"clamp(40px,7vw,82px)",color:"var(--white)",lineHeight:1,letterSpacing:"-0.01em"}}>{title}</h2>
   </motion.div>
 );
 
-const Wrap = ({children,style}) => <div style={{maxWidth:1080,margin:"0 auto",padding:"0 32px",...style}}>{children}</div>;
-const Sec  = ({id,children,style}) => <section id={id} style={{padding:"96px 0",position:"relative",...style}}>{children}</section>;
+const Wrap = ({children,style}) => (
+  <div className="section-wrap" style={{maxWidth:1080,margin:"0 auto",padding:"0 32px",...style}}>{children}</div>
+);
+const Sec = ({id,children,style}) => (
+  <section id={id} className="section-pad" style={{padding:"96px 0",position:"relative",...style}}>{children}</section>
+);
 
 // ─── NAV ──────────────────────────────────────────────────────────────────
 const NAV_ITEMS = ["Home","About","Skills","Projects","Certifications","Achievements","Contact"];
 const Nav = () => {
-  const [open,setOpen]       = useState(false);
-  const [scrolled,setScrolled] = useState(false);
-  useEffect(()=>{ const fn=()=>setScrolled(window.scrollY>50); window.addEventListener("scroll",fn); return ()=>window.removeEventListener("scroll",fn); },[]);
+  const [open, setOpen]       = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isMobileNav, setIsMobileNav] = useState(false);
+
+  useEffect(()=>{
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onResize = () => setIsMobileNav(window.innerWidth <= 900);
+    onScroll(); onResize();
+    window.addEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
+  },[]);
+
   return (
     <motion.nav
       initial={{y:-60,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.5}}
-      style={{position:"fixed",top:0,left:0,right:0,zIndex:500,padding:"0 32px",
-        background:scrolled?"rgba(4,5,10,0.9)":"transparent",
-        backdropFilter:scrolled?"blur(24px)":"none",
-        borderBottom:scrolled?"1px solid var(--border)":"none",
+      style={{position:"fixed",top:0,left:0,right:0,zIndex:500,
+        background: scrolled || open ? "rgba(4,5,10,0.97)" : "transparent",
+        backdropFilter: scrolled ? "blur(24px)" : "none",
+        borderBottom: scrolled ? "1px solid var(--border)" : "none",
         transition:"all 0.4s ease"}}
     >
-      <div style={{maxWidth:1080,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",height:62}}>
-        <a href="#home" style={{textDecoration:"none"}}>
+      <div style={{maxWidth:1080,margin:"0 auto",padding:"0 20px",display:"flex",alignItems:"center",justifyContent:"space-between",height:62}}>
+        <a href="#home" style={{textDecoration:"none",flexShrink:0}}>
           <span className="display" style={{fontSize:26,color:"var(--white)",letterSpacing:2}}>SK</span>
           <span style={{color:"var(--accent)",fontSize:26}}>.</span>
         </a>
-        <div style={{display:"flex",gap:2,alignItems:"center"}} className="hide-sm">
-          {NAV_ITEMS.map(n=><a key={n} href={`#${n.toLowerCase()}`} className="npill">{n}</a>)}
-        </div>
-        <button onClick={()=>window.open(resumeUrl,"_blank")} className="btn-y hide-sm" style={{padding:"8px 18px",fontSize:11}}>
-          <Download size={12}/> Resume
-        </button>
-        <button onClick={()=>setOpen(!open)} style={{background:"none",border:"none",color:"var(--white)",cursor:"none",padding:4}} className="show-mobile">
-          {open?<X size={20}/>:<Menu size={20}/>}
-        </button>
+
+        {/* Desktop nav links */}
+        {!isMobileNav && (
+          <div style={{display:"flex",gap:2,alignItems:"center"}}>
+            {NAV_ITEMS.map(n=><a key={n} href={`#${n.toLowerCase()}`} className="npill">{n}</a>)}
+          </div>
+        )}
+
+        {/* Desktop resume button */}
+        {!isMobileNav && (
+          <button onClick={()=>window.open(resumeUrl,"_blank")} className="btn-y" style={{padding:"8px 18px",fontSize:11,flexShrink:0}}>
+            <Download size={12}/> Resume
+          </button>
+        )}
+
+        {/* Mobile hamburger — always visible on mobile */}
+        {isMobileNav && (
+          <button
+            onClick={()=>setOpen(o=>!o)}
+            style={{background:"rgba(255,255,255,0.06)",border:"1px solid var(--border)",borderRadius:"50%",color:"var(--white)",width:44,height:44,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}
+          >
+            {open ? <X size={20}/> : <Menu size={20}/>}
+          </button>
+        )}
       </div>
+
+      {/* Mobile dropdown menu */}
       <AnimatePresence>
-        {open&&(
-          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
-            style={{background:"rgba(4,5,10,0.97)",borderTop:"1px solid var(--border)",overflow:"hidden"}}>
+        {open && isMobileNav && (
+          <motion.div
+            initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
+            style={{background:"rgba(4,5,10,0.98)",borderTop:"1px solid var(--border)",overflow:"hidden"}}
+          >
             {NAV_ITEMS.map(n=>(
               <a key={n} href={`#${n.toLowerCase()}`} onClick={()=>setOpen(false)}
-                style={{display:"block",padding:"13px 32px",color:"var(--text)",textDecoration:"none",fontFamily:"'IBM Plex Mono',monospace",fontSize:13}}>
+                style={{display:"flex",alignItems:"center",padding:"15px 24px",color:"var(--text)",textDecoration:"none",fontFamily:"'IBM Plex Mono',monospace",fontSize:13,letterSpacing:"0.08em",borderBottom:"1px solid rgba(255,255,255,0.04)",transition:"color 0.2s"}}
+                onMouseEnter={e=>e.currentTarget.style.color="var(--accent)"}
+                onMouseLeave={e=>e.currentTarget.style.color="var(--text)"}
+              >
                 {n}
               </a>
             ))}
+            {/* Resume button always visible at bottom of mobile menu */}
+            <div style={{padding:"16px 24px 20px"}}>
+              <button
+                onClick={()=>{ window.open(resumeUrl,"_blank"); setOpen(false); }}
+                className="btn-y"
+                style={{width:"100%",justifyContent:"center",padding:"13px",fontSize:12}}
+              >
+                <Download size={14}/> Download Resume
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -663,7 +705,10 @@ const Hero = () => {
       <div className="blob" style={{position:"absolute",left:"-8%",bottom:"5%",width:400,height:400,background:"radial-gradient(circle,rgba(255,0,160,0.04) 0%,transparent 70%)",filter:"blur(40px)",pointerEvents:"none",animationDelay:"4s"}}/>
 
       <Wrap style={{position:"relative",zIndex:10,paddingTop:80,width:"100%"}}>
-        <div style={{display:"grid",gridTemplateColumns:"1fr auto",gap:40,alignItems:"center"}}>
+        {/* HERO GRID — responsive: side-by-side on desktop, stacked on mobile */}
+        <div className="hero-grid" style={{display:"grid",gridTemplateColumns:"1fr auto",gap:40,alignItems:"center"}}>
+
+          {/* TEXT CONTENT */}
           <div>
             <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{duration:0.5}}>
               <AnimRole/>
@@ -671,7 +716,7 @@ const Hero = () => {
             <motion.h1
               initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.6,delay:0.1}}
               className="display gw" data-text="SAURABH KUMAR"
-              style={{fontSize:"clamp(54px,10vw,130px)",lineHeight:0.88,color:"var(--white)",letterSpacing:"-0.02em",marginBottom:26}}
+              style={{fontSize:"clamp(48px,10vw,130px)",lineHeight:0.88,color:"var(--white)",letterSpacing:"-0.02em",marginBottom:26}}
             >
               SAURABH<br/><span style={{color:"var(--accent)",textShadow:"0 0 80px rgba(0,240,255,0.35)"}}>KUMAR</span>
             </motion.h1>
@@ -679,12 +724,12 @@ const Hero = () => {
               style={{color:"var(--muted)",maxWidth:460,lineHeight:1.75,fontSize:14,marginBottom:32}}>
               Full-stack architect and ML enthusiast. Building digital systems that bridge elegant theory with real-world impact. B.Tech IT at ABES Engineering College.
             </motion.p>
-            <motion.div initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:0.5,duration:0.5}}
+            <motion.div className="hero-buttons" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:0.5,duration:0.5}}
               style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:44}}>
               <a href="#projects" className="btn-y">View Projects <ArrowUpRight size={13}/></a>
               <a href="#contact"  className="btn-g">Get In Touch</a>
             </motion.div>
-            <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.65}}
+            <motion.div className="hero-stats" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.65}}
               style={{display:"flex",gap:36,paddingTop:24,borderTop:"1px solid var(--border)"}}>
               {[["8.0","CGPA"],["250+","LeetCode"],["155+","GFG"]].map(([n,l])=>(
                 <div key={l}>
@@ -695,16 +740,22 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          <motion.div initial={{opacity:0,scale:0.8}} animate={{opacity:1,scale:1}} transition={{duration:0.7,delay:0.2}} className="hide-sm" style={{position:"relative"}}>
+          {/* PROFILE PICTURE — shown on desktop inline, on mobile shown above via CSS order */}
+          <motion.div
+            className="hero-profile"
+            initial={{opacity:0,scale:0.8}} animate={{opacity:1,scale:1}} transition={{duration:0.7,delay:0.2}}
+            style={{position:"relative",display:"flex",justifyContent:"center"}}
+          >
             <motion.div animate={{rotate:360}} transition={{duration:14,repeat:Infinity,ease:"linear"}}
               style={{position:"absolute",inset:-10,borderRadius:"50%",background:"conic-gradient(from 0deg,var(--accent),transparent 40%,var(--accent2),transparent 80%,var(--accent3))",filter:"blur(5px)",opacity:0.65}}/>
             <img src={profilePic} alt="Saurabh Kumar"
-              style={{width:220,height:220,borderRadius:"50%",objectFit:"cover",border:"6px solid var(--bg)",position:"relative",zIndex:2,display:"block"}}/>
+              style={{width:"clamp(150px,25vw,220px)",height:"clamp(150px,25vw,220px)",borderRadius:"50%",objectFit:"cover",border:"6px solid var(--bg)",position:"relative",zIndex:2,display:"block"}}/>
             <div style={{position:"absolute",bottom:10,right:-4,zIndex:10,background:"var(--surface)",border:"1px solid var(--border)",borderRadius:100,padding:"5px 13px",display:"flex",alignItems:"center",gap:7}}>
               <div style={{width:7,height:7,borderRadius:"50%",background:"#22c55e",boxShadow:"0 0 8px #22c55e"}}/>
               <span className="mono" style={{fontSize:9,color:"var(--text)",letterSpacing:"0.12em"}}>AVAILABLE</span>
             </div>
           </motion.div>
+
         </div>
 
         <motion.div animate={{y:[0,9,0]}} transition={{repeat:Infinity,duration:2.2}}
@@ -738,7 +789,7 @@ const About = () => (
       <div className="grid-about" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:64}}>
         <motion.div initial={{opacity:0,x:-30}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:0.6}}>
           <span className="slabel">WHO I AM</span>
-          <h2 className="display" style={{fontSize:"clamp(40px,5vw,70px)",color:"var(--white)",lineHeight:1,marginBottom:24}}>ABOUT<br/>ME</h2>
+          <h2 className="display" style={{fontSize:"clamp(36px,5vw,70px)",color:"var(--white)",lineHeight:1,marginBottom:24}}>ABOUT<br/>ME</h2>
           <p style={{color:"var(--muted)",lineHeight:1.85,fontSize:14,marginBottom:18}}>
             I'm a dedicated IT student at <span style={{color:"var(--white)"}}>ABES Engineering College</span>, obsessively building things that work elegantly, efficiently, and at scale.
           </p>
@@ -754,7 +805,7 @@ const About = () => (
                 <div>
                   <p style={{color:"var(--white)",fontWeight:600,fontSize:13,marginBottom:3}}>{EDU.degree}</p>
                   <p className="mono" style={{color:"var(--muted)",fontSize:10,marginBottom:8}}>{EDU.college}</p>
-                  <div style={{display:"flex",gap:16}}>
+                  <div style={{display:"flex",gap:16,flexWrap:"wrap"}}>
                     <span className="mono" style={{fontSize:9,color:"var(--muted)"}}>{EDU.years}</span>
                     <span className="mono" style={{fontSize:9,color:"var(--accent)"}}>CGPA {EDU.cgpa}</span>
                   </div>
@@ -762,14 +813,11 @@ const About = () => (
               </div>
             </div>
           </Tilt>
-          
-          {/* UPDATED SOCIAL ICONS */}
-          <div style={{display:"flex",gap:16,marginTop:24}}>
+          <div style={{display:"flex",gap:12,marginTop:24,flexWrap:"wrap"}}>
             {SOCIALS.map((social) => (
               <SocialIconBtn key={social.name} {...social} />
             ))}
           </div>
-
         </motion.div>
 
         <motion.div initial={{opacity:0,x:30}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:0.6}}>
@@ -820,7 +868,7 @@ const Skills = () => (
 // ─── PROJECT CARD ─────────────────────────────────────────────────────────
 const PCard = ({p}) => (
   <Tilt>
-    <motion.div className="card rot-border" whileHover={{y:-6}} transition={{duration:0.22}}
+    <motion.div className="card rot-border pcard-wrap" whileHover={{y:-6}} transition={{duration:0.22}}
       style={{padding:26,background:"var(--surface2)",position:"relative",overflow:"hidden",maxWidth:440,width:"100%"}}>
       <div style={{position:"absolute",top:-30,right:-30,width:130,height:130,borderRadius:"50%",background:`radial-gradient(circle,${p.accent}18,transparent 70%)`,filter:"blur(18px)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,transparent,${p.accent},transparent)`}}/>
@@ -836,7 +884,7 @@ const PCard = ({p}) => (
       <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:20}}>
         {p.tags.map(t=><span key={t} className="stag" style={{borderColor:`${p.accent}22`,color:p.accent,background:`${p.accent}07`}}>{t}</span>)}
       </div>
-      <div style={{display:"flex",gap:9}}>
+      <div style={{display:"flex",gap:9,flexWrap:"wrap"}}>
         <motion.a href={p.live} target="_blank" rel="noopener noreferrer"
           whileHover={{scale:1.04,y:-2}}
           style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",borderRadius:100,background:p.accent,color:"#000",fontSize:11,fontWeight:700,textDecoration:"none",letterSpacing:"0.06em",textTransform:"uppercase"}}>
@@ -855,42 +903,94 @@ const PCard = ({p}) => (
 );
 
 // ─── PROJECTS TIMELINE ────────────────────────────────────────────────────
-const Projects = () => (
-  <Sec id="projects">
-    <Wrap>
-      <SH label="WHAT I'VE BUILT" title="MY PROJECTS"/>
-      <div style={{position:"relative"}}>
-        <div style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,background:"linear-gradient(to bottom,transparent,var(--accent) 15%,var(--accent2) 50%,var(--accent3) 85%,transparent)",transform:"translateX(-50%)",pointerEvents:"none"}}/>
-        {PROJECTS.map((p,i)=>{
-          const isLeft = i%2===0;
-          return (
-            <motion.div key={p.num} className="timeline-grid"
-              initial={{opacity:0,x:isLeft?-40:40}} whileInView={{opacity:1,x:0}} viewport={{once:true,amount:0.35}} transition={{duration:0.55,delay:0.05}}
-              style={{display:"grid",gridTemplateColumns:"1fr 48px 1fr",alignItems:"center",marginBottom:i<PROJECTS.length-1?64:0}}>
-              <div className={isLeft?"":"tl-left"} style={{paddingRight:32,display:"flex",justifyContent:"flex-end"}}>
-                {isLeft?<PCard p={p}/>:<div style={{textAlign:"right"}}><div className="display" style={{fontSize:80,color:"rgba(255,255,255,0.04)",lineHeight:1}}>{p.num}</div><p className="mono" style={{fontSize:10,color:"var(--muted)",letterSpacing:"0.22em"}}>{p.year}</p></div>}
-              </div>
-              <div style={{display:"flex",justifyContent:"center"}}>
-                <motion.div whileInView={{scale:[0,1.35,1]}} viewport={{once:true}} transition={{duration:0.45}}
-                  style={{width:15,height:15,borderRadius:"50%",background:p.accent,border:"3px solid var(--bg)",boxShadow:`0 0 20px ${p.accent}88,0 0 50px ${p.accent}30`,position:"relative",zIndex:2,flexShrink:0}}/>
-              </div>
-              <div className={!isLeft?"":"tl-right"} style={{paddingLeft:32}}>
-                {!isLeft?<PCard p={p}/>:<div><div className="display" style={{fontSize:80,color:"rgba(255,255,255,0.04)",lineHeight:1}}>{p.num}</div><p className="mono" style={{fontSize:10,color:"var(--muted)",letterSpacing:"0.22em"}}>{p.year}</p></div>}
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-    </Wrap>
-  </Sec>
-);
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 700);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+};
+
+const Projects = () => {
+  const isMobile = useIsMobile();
+
+  return (
+    <Sec id="projects">
+      <Wrap>
+        <SH label="WHAT I'VE BUILT" title="MY PROJECTS"/>
+
+        {/* ── MOBILE: simple vertical stack ── */}
+        {isMobile ? (
+          <div style={{position:"relative",paddingLeft:28}}>
+            {/* Left rail line */}
+            <div style={{position:"absolute",left:7,top:0,bottom:0,width:2,background:"linear-gradient(to bottom,transparent,var(--accent) 10%,var(--accent2) 50%,var(--accent3) 90%,transparent)",borderRadius:2,pointerEvents:"none"}}/>
+
+            {PROJECTS.map((p,i)=>(
+              <motion.div key={p.num}
+                initial={{opacity:0,x:-24}} whileInView={{opacity:1,x:0}} viewport={{once:true,amount:0.15}} transition={{duration:0.45,delay:0.05}}
+                style={{position:"relative",marginBottom:i<PROJECTS.length-1?36:0}}
+              >
+                {/* Dot on rail */}
+                <motion.div
+                  whileInView={{scale:[0,1.4,1]}} viewport={{once:true}} transition={{duration:0.4}}
+                  style={{position:"absolute",left:-24,top:20,width:14,height:14,borderRadius:"50%",background:p.accent,border:"2px solid var(--bg)",boxShadow:`0 0 12px ${p.accent}99`,zIndex:2,flexShrink:0}}
+                />
+                <PCard p={p}/>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          /* ── DESKTOP: alternating timeline ── */
+          <div style={{position:"relative"}}>
+            <div style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,background:"linear-gradient(to bottom,transparent,var(--accent) 15%,var(--accent2) 50%,var(--accent3) 85%,transparent)",transform:"translateX(-50%)",pointerEvents:"none"}}/>
+            {PROJECTS.map((p,i)=>{
+              const isLeft = i%2===0;
+              return (
+                <motion.div key={p.num}
+                  initial={{opacity:0,x:isLeft?-40:40}} whileInView={{opacity:1,x:0}} viewport={{once:true,amount:0.2}} transition={{duration:0.55,delay:0.05}}
+                  style={{display:"grid",gridTemplateColumns:"1fr 48px 1fr",alignItems:"center",marginBottom:i<PROJECTS.length-1?64:0}}
+                >
+                  <div style={{paddingRight:32,display:"flex",justifyContent:"flex-end"}}>
+                    {isLeft
+                      ? <PCard p={p}/>
+                      : <div style={{textAlign:"right"}}>
+                          <div className="display" style={{fontSize:80,color:"rgba(255,255,255,0.04)",lineHeight:1}}>{p.num}</div>
+                          <p className="mono" style={{fontSize:10,color:"var(--muted)",letterSpacing:"0.22em"}}>{p.year}</p>
+                        </div>
+                    }
+                  </div>
+                  <div style={{display:"flex",justifyContent:"center"}}>
+                    <motion.div whileInView={{scale:[0,1.35,1]}} viewport={{once:true}} transition={{duration:0.45}}
+                      style={{width:15,height:15,borderRadius:"50%",background:p.accent,border:"3px solid var(--bg)",boxShadow:`0 0 20px ${p.accent}88,0 0 50px ${p.accent}30`,position:"relative",zIndex:2,flexShrink:0}}/>
+                  </div>
+                  <div style={{paddingLeft:32}}>
+                    {!isLeft
+                      ? <PCard p={p}/>
+                      : <div>
+                          <div className="display" style={{fontSize:80,color:"rgba(255,255,255,0.04)",lineHeight:1}}>{p.num}</div>
+                          <p className="mono" style={{fontSize:10,color:"var(--muted)",letterSpacing:"0.22em"}}>{p.year}</p>
+                        </div>
+                    }
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
+      </Wrap>
+    </Sec>
+  );
+};
 
 // ─── CERTIFICATIONS ───────────────────────────────────────────────────────
 const Certifications = () => (
   <Sec id="certifications" style={{background:"var(--surface)"}}>
     <Wrap>
       <SH label="CREDENTIALS" title="CERTIFICATIONS"/>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:20}}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20}}>
         {CERTS.map((c,i)=>(
           <Tilt key={i}>
             <motion.div className="card rot-border"
@@ -898,10 +998,10 @@ const Certifications = () => (
               style={{padding:"20px 24px",display:"flex",alignItems:"center",gap:18,background:"var(--surface2)",position:"relative",overflow:"hidden"}}
             >
               <div style={{position:"absolute",top:-20,right:-20,width:80,height:80,borderRadius:"50%",background:"radial-gradient(circle,rgba(0,240,255,0.12) 0%,transparent 70%)",filter:"blur(15px)",pointerEvents:"none"}}/>
-              <div style={{width:48,height:48,borderRadius:12,background:"rgba(0,240,255,0.08)",border:"1px solid rgba(0,240,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--accent)",flexShrink:0,position:"relative",zIndex:2}}>
+              <div style={{width:48,height:48,minWidth:48,borderRadius:12,background:"rgba(0,240,255,0.08)",border:"1px solid rgba(0,240,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--accent)",position:"relative",zIndex:2}}>
                 <Award size={22}/>
               </div>
-              <div style={{position:"relative",zIndex:2}}>
+              <div style={{position:"relative",zIndex:2,minWidth:0}}>
                 <p style={{fontSize:14,fontWeight:700,color:"var(--white)",marginBottom:5,lineHeight:1.3}}>{c.name}</p>
                 <p className="mono" style={{fontSize:10,color:"var(--muted)",letterSpacing:"0.08em",textTransform:"uppercase"}}>{c.issuer}</p>
               </div>
@@ -927,7 +1027,7 @@ const Achievements = () => (
               <div style={{width:48,height:48,borderRadius:12,margin:"0 auto 18px",display:"flex",alignItems:"center",justifyContent:"center",background:`${a.accent}10`,border:`1px solid ${a.accent}22`,color:a.accent}}>
                 <a.Icon size={20}/>
               </div>
-              <div className="display" style={{fontSize:52,color:a.accent,lineHeight:1,marginBottom:8}}>{a.num}</div>
+              <div className="display" style={{fontSize:"clamp(36px,6vw,52px)",color:a.accent,lineHeight:1,marginBottom:8}}>{a.num}</div>
               <p style={{fontSize:13,fontWeight:700,color:"var(--white)",marginBottom:7}}>{a.label}</p>
               <p style={{fontSize:12,color:"var(--muted)",lineHeight:1.6}}>{a.sub}</p>
             </motion.div>
@@ -945,7 +1045,7 @@ const Contact = () => (
       <div className="grid-contact" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:80,alignItems:"start"}}>
         <motion.div initial={{opacity:0,x:-28}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:0.55}}>
           <span className="slabel">LET'S CONNECT</span>
-          <h2 className="display" style={{fontSize:"clamp(46px,6vw,80px)",color:"var(--white)",lineHeight:1,marginBottom:22}}>
+          <h2 className="display" style={{fontSize:"clamp(40px,6vw,80px)",color:"var(--white)",lineHeight:1,marginBottom:22}}>
             GET IN<br/><span style={{color:"var(--accent)"}}>TOUCH</span>
           </h2>
           <p style={{color:"var(--muted)",lineHeight:1.8,fontSize:14,marginBottom:32,maxWidth:340}}>
@@ -963,24 +1063,21 @@ const Contact = () => (
               {icon:<MapPin size={15}/>, label:"Location", val:ME.location, href:"#"},
             ].map(item=>(
               <motion.a key={item.label} href={item.href} className="clink" whileHover={{x:8}}>
-                <div style={{width:34,height:34,borderRadius:8,background:"rgba(0,240,255,0.07)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--accent)",flexShrink:0}}>
+                <div style={{width:34,height:34,minWidth:34,borderRadius:8,background:"rgba(0,240,255,0.07)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--accent)"}}>
                   {item.icon}
                 </div>
-                <div>
+                <div style={{minWidth:0}}>
                   <p className="mono" style={{fontSize:8,color:"var(--muted)",letterSpacing:"0.22em",textTransform:"uppercase",marginBottom:2}}>{item.label}</p>
-                  <p style={{fontSize:13,color:"var(--white)",fontWeight:500}}>{item.val}</p>
+                  <p style={{fontSize:13,color:"var(--white)",fontWeight:500,wordBreak:"break-word"}}>{item.val}</p>
                 </div>
               </motion.a>
             ))}
           </div>
-          
-          {/* UPDATED SOCIAL ICONS */}
-          <div style={{display:"flex",gap:16}}>
+          <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
             {SOCIALS.map((social) => (
               <SocialIconBtn key={social.name} {...social} />
             ))}
           </div>
-
         </motion.div>
       </div>
     </Wrap>
@@ -989,34 +1086,69 @@ const Contact = () => (
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────
 const Footer = () => (
-  <footer style={{borderTop:"1px solid var(--border)",padding:"32px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:20,background:"var(--bg)"}}>
-    <span className="display" style={{fontSize:24,color:"var(--accent)"}}>SK.</span>
-    
-    {/* TEXT UPDATED TO MATCH YOUR REQUEST */}
-    <p style={{fontSize:13,color:"#6b7280", fontWeight: 500}}>
-      Built with <span style={{color:"#ff00a0"}}>❤️</span> by <span style={{color:"#eef0f9"}}>Saurabh (Sashi)</span> using React & Three.js
-    </p>
-
-    {/* UPDATED SOCIAL ICONS */}
-    <div style={{display:"flex",gap:12}}>
-      {SOCIALS.map((social) => (
-        <SocialIconBtn key={social.name} {...social} />
-      ))}
+  <footer style={{borderTop:"1px solid var(--border)",padding:"32px",background:"var(--bg)"}}>
+    <div className="footer-inner" style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:20}}>
+      <span className="display" style={{fontSize:24,color:"var(--accent)"}}>SK.</span>
+      <p style={{fontSize:13,color:"#6b7280",fontWeight:500,textAlign:"center"}}>
+        Built with <span style={{color:"#ff00a0"}}>❤️</span> by <span style={{color:"#eef0f9"}}>Saurabh (Sashi)</span> using React & Three.js
+      </p>
+      <div style={{display:"flex",gap:12,flexWrap:"wrap",justifyContent:"center"}}>
+        {SOCIALS.map((social) => (
+          <SocialIconBtn key={social.name} {...social} />
+        ))}
+      </div>
     </div>
   </footer>
 );
 
-// ─── RESPONSIVE ───────────────────────────────────────────────────────────
-const RESP = `
-  @media(max-width:900px){.hide-sm{display:none!important;}.show-mobile{display:flex!important;}}
-  @media(min-width:901px){.show-mobile{display:none!important;}}
+// ─── MOBILE HERO OVERRIDE ─────────────────────────────────────────────────
+// Injected as a separate style block so it can use !important cleanly
+const MOBILE_HERO_STYLES = `
+  @media (max-width: 600px) {
+    .hero-grid {
+      grid-template-columns: 1fr !important;
+      text-align: center !important;
+    }
+    .hero-profile {
+      display: flex !important;
+      justify-content: center !important;
+      order: -1 !important;
+      margin-bottom: 16px !important;
+    }
+    .hero-profile img {
+      width: 160px !important;
+      height: 160px !important;
+    }
+    .hero-buttons {
+      justify-content: center !important;
+    }
+    .hero-stats {
+      justify-content: center !important;
+    }
+    .gw {
+      word-break: break-word !important;
+    }
+  }
+  @media (max-width: 900px) and (min-width: 601px) {
+    .hero-grid {
+      grid-template-columns: 1fr auto !important;
+    }
+    .hero-profile {
+      display: flex !important;
+    }
+    .hero-profile img {
+      width: 180px !important;
+      height: 180px !important;
+    }
+  }
 `;
 
 // ─── APP ──────────────────────────────────────────────────────────────────
 export default function App() {
   return (
     <>
-      <style>{STYLES + RESP}</style>
+      <style>{STYLES}</style>
+      <style>{MOBILE_HERO_STYLES}</style>
       <div className="noise">
         <Cursor/>
         <ScrollBar/>
